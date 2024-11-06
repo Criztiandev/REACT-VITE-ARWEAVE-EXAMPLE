@@ -1,66 +1,51 @@
-# React Vite Arweave Example
+# React + TypeScript + Vite
 
-This repository showcases a simple example of using React with Vite and Arweave for decentralized storage.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Technology Stack
+Currently, two official plugins are available:
 
-- **React Vite**: A fast and modern frontend framework.
-- **React Router Dom**: For managing routing within the application.
-- **Arwallet Kit**: For wallet integration.
-- **Permamaweb/aoconnect**: To connect to Arweave.
-- **ShadcnUI**: A UI component library for building interfaces.
-- **TailwindCSS**: A utility-first CSS framework for styling.
-- **React Query**: For efficient data fetching and state management.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Installation
+## Expanding the ESLint configuration
 
-To get started with this project, follow these steps:
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-1. Clone the repository:
+- Configure the top-level `parserOptions` property like this:
 
-   ```bash
-   git clone https://github.com/Criztiandev/REACT-VITE-ARWEAVE-EXAMPLE.git
-   ```
+```js
+export default tseslint.config({
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+})
+```
 
-2. Navigte to the project directory:
+- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
+- Optionally add `...tseslint.configs.stylisticTypeChecked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
 
-   ```bash
-   cd REACT-VITE-ARWEAVE-EXAMPLE
-   ```
+```js
+// eslint.config.js
+import react from 'eslint-plugin-react'
 
-3. Create an environment file named `.env.local` or `.env.production`, and copy and paste the following lines, filling in the process ID:
-
-   ```bash
-   VITE_DEV_ENVIRONMENT = development
-   VITE_PROCESS_ID = 
-   ```
-4. Install the dependencies:
-
-   ```bash
-   npm install
-   ```
-
-## Deployment
-
-To get started with this project, follow these steps:
-
-1. Build the app:
-
-   ```bash
-   npm run build
-
-   ```
-
-2. Create an account on ArDrive and upload the build folder.
-3. Inside the uploaded folder, create a manifest.json file that defines your app's structure and assets.
-4. Ensure your wallet is funded with AR tokens to cover deployment costs.
-
-[References]: https://www.youtube.com/watch?v=Va5B4SE8Zu8&t=201s
-
-## Additional Notes
-- The Arweave wallet currently lacks TypeScript support, so you may need to use // @ts-ignore in your code where necessary.
-- Manage your wallet.json file securely as it contains sensitive information related to your Arweave wallet.
-- For successful deployment, ensure all required dependencies are installed and configured correctly.
-
-## Live Deployment
-You can view a live demo of the deployment application at [Live Demo](https://ar-io.net/EExkXScS8qUUgM6svwD_m4drW1fFNGaSsb1pdlfAU8o)
+export default tseslint.config({
+  // Set the react version
+  settings: { react: { version: '18.3' } },
+  plugins: {
+    // Add the react plugin
+    react,
+  },
+  rules: {
+    // other rules...
+    // Enable its recommended rules
+    ...react.configs.recommended.rules,
+    ...react.configs['jsx-runtime'].rules,
+  },
+})
+```
+# test-deploy-ardrive
