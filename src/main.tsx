@@ -16,25 +16,23 @@ const queryClient = new QueryClient();
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <Suspense fallback={<div>Loading...</div>}>
-        <QueryErrorResetBoundary>
-          {({ reset }) => (
-            <ErrorBoundary
-              onReset={reset}
-              fallbackRender={() => <div>There was an error</div>}
+      <QueryErrorResetBoundary>
+        {({ reset }) => (
+          <ErrorBoundary
+            onReset={reset}
+            fallbackRender={() => <div>There was an error</div>}
+          >
+            <ArweaveWalletKit
+              config={{
+                permissions: ["ACCESS_ADDRESS", "SIGN_TRANSACTION"],
+                ensurePermissions: true,
+              }}
             >
-              <ArweaveWalletKit
-                config={{
-                  permissions: ["ACCESS_ADDRESS", "SIGN_TRANSACTION"],
-                  ensurePermissions: true,
-                }}
-              >
-                <App />
-              </ArweaveWalletKit>
-            </ErrorBoundary>
-          )}
-        </QueryErrorResetBoundary>
-      </Suspense>
+              <App />
+            </ArweaveWalletKit>
+          </ErrorBoundary>
+        )}
+      </QueryErrorResetBoundary>
     </QueryClientProvider>
   </StrictMode>
 );
