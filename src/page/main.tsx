@@ -10,8 +10,11 @@ import { cn } from "@/lib/utils";
 function MainScreen() {
   const [prepMessage, setPrepMessage] = useState("");
   const { connected, connect, disconnect } = useConnection();
-  const myProcess = "IDeaUVCPYFlP8uFGDQv1ETZgbWEEWSr8Eaga1RMnpwY";
+  const myProcess = import.meta.env.VITE_PROCESS_ID;
 
+  /**
+   * Connecting Wallet
+   */
   const handleConnection = async () => {
     try {
       if (connected) {
@@ -24,6 +27,9 @@ function MainScreen() {
     }
   };
 
+  /**
+   * Sending Mutation from client to server
+   */
   const mutation = useMutation({
     mutationKey: ["Send"],
     mutationFn: async () => {
